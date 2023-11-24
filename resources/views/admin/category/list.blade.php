@@ -2,7 +2,8 @@
 
 @section('content')
 
-@include('admin.message')
+@extends('admin.message')
+
 <!-- Content Header (Page header) -->
 <section class="content-header">					
     <div class="container-fluid my-2">
@@ -11,7 +12,7 @@
                 <h1>Kategori</h1>
             </div>
             <div class="col-sm-6 text-right">
-                <a href="{{route('kategori.create')}}" class="btn btn-primary">Tambah Kategori</a>
+                <a href="{{route('categories.create')}}" class="btn btn-primary">Tambah Kategori</a>
             </div>
         </div>
     </div>
@@ -25,9 +26,9 @@
             <form action="" method="get">
                 <div class="card-header">
                     <div class="card-title">
-                        <button type="button" onclick="window.location.href='{{route("kategori.index")}}'" class="btn btn-default" btn-sm>Refresh</button>
+                        <button type="button" onclick="window.location.href='{{route("categories.index")}}'" class="btn btn-default" btn-sm>Refresh</button>
                     </div>
-
+                    
                     <div class="card-tools">
                         <div class="input-group input-group" style="width: 250px;">
                             <input value="{{Request::get('keyword')}}" type="text" name="keyword" class="form-control float-right" placeholder="Search">
@@ -59,41 +60,41 @@
                     </thead>
                     <tbody>
                         @if($categories->isnotempty())
-                            @foreach($categories as $category)
-                            <tr>
-                                <td>{{$category->id}}</td>
-                                <td>{{$category->nama}}</td>
-                                <td>{{$category->slug}}</td>
-                                <td>
-                                    
-                                    @if($category->status == 1)
-                                    <svg class="text-success-500 h-6 w-6 text-success" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        @foreach($categories as $category)
+                        <tr>
+                            <td>{{$category->id}}</td>
+                            <td>{{$category->nama}}</td>
+                            <td>{{$category->slug}}</td>
+                            <td>
+                                
+                                @if($category->status == 1)
+                                <svg class="text-success-500 h-6 w-6 text-success" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                @else
+                                <svg class="text-danger h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                @endif
+                            </td>
+                            <td>
+                                <a href="{{route('categories.edit',$category->id)}}">
+                                    <svg class="filament-link-icon w-4 h-4 mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                        <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"></path>
                                     </svg>
-                                    @else
-                                    <svg class="text-danger h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </a>
+                                <a href="#" onclick="deleteCategory({{$category->id}})" class="text-danger w-4 h-4 mr-1">
+                                    <svg wire:loading.remove.delay="" wire:target="" class="filament-link-icon w-4 h-4 mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                        <path	ath fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"></path>
                                     </svg>
-                                    @endif
-                                </td>
-                                <td>
-                                    <a href="#">
-                                        <svg class="filament-link-icon w-4 h-4 mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                            <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"></path>
-                                        </svg>
-                                    </a>
-                                    <a href="#" class="text-danger w-4 h-4 mr-1">
-                                        <svg wire:loading.remove.delay="" wire:target="" class="filament-link-icon w-4 h-4 mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                            <path	ath fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"></path>
-                                        </svg>
-                                    </a>
-                                </td>
-                            </tr>
-                            @endforeach
+                                </a>
+                            </td>
+                        </tr>
+                        @endforeach
                         @else
-                            <tr>
-                                <td colspan="5">Data tidak ditemukan</td>
-                            </tr>
+                        <tr>
+                            <td colspan="5">Data tidak ditemukan</td>
+                        </tr>
                         @endif
                     </tbody>
                 </table>										
@@ -108,4 +109,92 @@
 <!-- /.content -->
 @endsection
 
+@section('customJs')
+<script>
+     function deleteCategory(id) {
+        var url = '{{ route("categories.delete", "ID") }}';
+        var newUrl = url.replace("ID", id);
+        
+        Swal.fire({
+            title: "Apa anda yakin ?",
+            text: "Anda tidak akan bisa mengembalikan data ini !!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Ya, hapus datanya",
+            cancelButtonText: "Tidak, batalkan",
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: newUrl,
+                    type: 'delete',
+                    data: {},
+                    dataType: 'json',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                    },
+                    success: function (response) {
+                        if (response["status"]) {
+                            // SweetAlert untuk berhasil
+                            Swal.fire({
+                                title: "Berhasil!",
+                                text: "Data telah dihapus",
+                                icon: "success"
 
+                                
+                            }).then(() => {
+                                
+                                // Toastr untuk menampilkan notifikasi
+                                toastr.info("Data sedang dihapus");
+
+                                // Redirect setelah menutup notifikasi
+                                setTimeout(function () {
+                                    window.location.href = "{{ route('categories.index') }}";
+                                }, 1500);
+                                
+                            });
+                        }
+                    }
+                });
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+                // SweetAlert untuk dibatalkan
+                Swal.fire({
+                    title: "Dibatalkan",
+                    text: "Data tidak dihapus",
+                    icon: "error"
+                });
+            }
+        });
+    }
+    // function deleteCategory(id){
+    //         var url = '{{route("categories.delete","ID")}}';
+    //         var newUrl = url.replace("ID",id)
+        
+    //         if(confirm("Apa kau yakin ingin menghapusnya ?")){
+    //                 $.ajax({
+    //                         url: newUrl,
+    //                         type: 'delete',
+    //                         data: {},
+    //                         dataType: 'json',
+    //                         headers: {
+    //                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+    //                             },
+    //                             success: function (response) {
+                        
+    //                                     if (response["status"] ) {
+                            
+    //                                             window.location.href="{{route('categories.index')}}";
+    //                                         } 
+    //                                     }
+    //                                 })
+    //                             }
+    //                         }
+</script>
+@endsection
+
+
+                    
+                        
+                        
+                        
+                        

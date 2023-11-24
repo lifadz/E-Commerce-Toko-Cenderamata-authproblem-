@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\Category;
 use App\Models\TempImage;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Redirect;
 use Intervention\Image\Facades\Image;
 class CategoryController extends Controller
 {
@@ -47,14 +48,18 @@ class CategoryController extends Controller
 
                 $newImageName = $category->id.'.'.$ext;
                 $sPath = public_path().'/temp/'.$tempImage->nama;
-                $dPath = public_path().'/upload/kategori'.$newImageName;
+                $dPath = public_path().'/upload/kategori/'.$newImageName;
                 File::copy($sPath,$dPath);
 
                 //Menampilkan thumbnail
                 $dPath = public_path().'/upload/kategori/thumbnail/'.$newImageName;
 
                 $img = Image::make($sPath);
-                $img->resize(450,600);
+                // $img->resize(450,600);
+                $img->fit(450, 600, function ($constraint) {
+                    $constraint->upsize();
+                });
+                
                 $img->save($dPath);
 
                 $category->image = $newImageName;
@@ -66,7 +71,7 @@ class CategoryController extends Controller
     
             return response()->json([
                 'status' => true,
-                'message' => 'Kategori Berhasil Dibuat'
+                'message' => 'Kategori Berhasil Diperbarui'
             ]);
         } else {
             return response()->json([
@@ -76,15 +81,114 @@ class CategoryController extends Controller
         }
     }
 
-    public function edit(){
+    public function edit($categoryId,Request $request){        
+        $category = Category::find($categoryId);
+
+        if(empty($category)){
+            return redirect()->route('categories.index');
+        }
+        
+        return view('admin.category.edit',compact('category'));
         
     }
 
-    public function update(){
+    public function update($categoryId,Request $request){
+
+        $category = Category::find($categoryId);
+
+        if(empty($category)){
+            session()->flash('error', 'Kategori tidak ditemukan');
+
+            return response()->json([
+                'status' => false,
+                'notFound' => true,
+                'message' => 'Kategori tidak ditemukan'
+            ]);
+        }
+
+        $validator = Validator::make($request->all(), [
+            'nama' => 'required',
+            'slug' => 'required|unique:categories,slug,'.$category->id.',id',
+        ]);
+    
+        if ($validator->passes()) {
+            $category->nama = $request->nama;
+            $category->slug = $request->slug;
+            $category->status = $request->status;
+            $category->save();
+
+            $oldImage = $category->image;
+            
+            //Menyimpan gambar
+            if(!empty($request->image_id)){
+                $tempImage = TempImage::find($request->image_id);
+                $extArray = explode('.',$tempImage->nama);
+                $ext = last($extArray);
+
+                $newImageName = $category->id.'-'.time().'.'.$ext;
+                $sPath = public_path().'/temp/'.$tempImage->nama;
+                $dPath = public_path().'/upload/kategori/'.$newImageName;
+                File::copy($sPath,$dPath);
+
+                //Menampilkan thumbnail
+                $dPath = public_path().'/upload/kategori/thumbnail/'.$newImageName;
+
+                $img = Image::make($sPath);
+                // $img->resize(450,600);
+                $img->fit(450, 600, function ($constraint) {
+                    $constraint->upsize();
+                });
+
+                $img->save($dPath);
+
+                $category->image = $newImageName;
+                $category->save();
+
+                //menghapus gambar lama
+                File::delete(public_path().'/upload/kategori/thumbnail/'.$oldImage);
+                File::delete(public_path().'/upload/kategori/'.$oldImage);
+            }
+            
+    
+            session()->flash('success', 'Kategori Berhasil Diperbarui');
+    
+            return response()->json([
+                'status' => true,
+                'message' => 'Kategori Berhasil Dibuat'
+            ]);
+        } else {
+            return response()->json([
+                'status' => false,
+                'errors' => $validator->errors()
+            ]);
+        }
         
     }
 
-    public function destroy(){
+    public function destroy($categoryId,Request $request){
+
+        $category = Category::find($categoryId);
+
+        if(empty($category)){
+            session()->flash('error','Kategori tidak ditemukan');
+            return response()->json([
+                'status' => true,
+                'message' => 'Kategori tidak ditemukan'
+            ]);
+            // return redirect()->route('categories.index');
+        }
+
+        File::delete(public_path().'/upload/kategori/thumbnail/'.$category->image);
+        File::delete(public_path().'/upload/kategori/'.$category->image);
+
+        $category->delete();
+
+        // session()->flash('success','Kategori berhasil dihapus');
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Kategori berhasil dihapus'
+        ]);
         
     }
 }

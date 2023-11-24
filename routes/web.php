@@ -41,11 +41,13 @@ Route::group(['prefix' => 'admin'],function (){
         Route::post('/update-profile', [HomeController::class, 'updateProfile'])->name('admin.updateProfile');
 
         //Route Kategori
-        Route::get('/kategori',[CategoryController::class,'index'])->name('kategori.index');
-        Route::get('/kategori/tambah-kategori',[CategoryController::class,'create'])
-        ->where('tambah-kategori','tambah')
-        ->name('kategori.create');
-        Route::post('/kategori',[CategoryController::class,'store'])->name('kategori.store');
+        Route::get('/kategori',[CategoryController::class,'index'])->name('categories.index');
+        Route::get('/kategori/tambah-kategori',[CategoryController::class,'create'])->name('categories.create');
+        Route::post('/kategori',[CategoryController::class,'store'])->name('categories.store');
+        Route::get('/kategori/{category}/edit-kategori',[CategoryController::class,'edit'])->name('categories.edit');
+        Route::put('/kategori/{category}',[CategoryController::class,'update'])->name('categories.update');
+        Route::delete('/kategori/{category}',[CategoryController::class,'destroy'])->name('categories.delete');
+
 
         //temp image category
         Route::post('/upload-temp-image',[TempImagesController::class,'create'])->name('temp-images.create');

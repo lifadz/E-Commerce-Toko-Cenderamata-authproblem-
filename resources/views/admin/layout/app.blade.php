@@ -16,7 +16,14 @@
 	<link rel="stylesheet" href="{{asset('admin-assets/css/custom.css')}}">
 	
 	<link rel="icon" href="{{asset('admin-assets/img/logofajrii.png')}}">
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
 	<meta name="csrf-token" content="{{csrf_token()}}">
+	
+	
 </head>
 
 <body class="hold-transition sidebar-mini">
@@ -96,6 +103,14 @@
 
 		<!-- AdminLTE for demo purposes -->
 		<script src="{{asset('admin-assets/js/demo.js')}}"></script>
+
+		{{-- Script sweet alert --}}
+		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+		{{-- Script Toastr --}}
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 		
 		{{-- Script agar nama file saat ingin mengubah profile image admin tertera di form upload  --}}
 		@yield('customFile-Js')
@@ -111,5 +126,21 @@
 		</script>
 
 		@yield('customJs')
+
+		@section('autoclose')
+		<script>
+			$(document).ready(function(){
+				// Fungsi untuk menyembunyikan alert setelah 5 detik
+				setTimeout(function(){
+					$(".alert").fadeOut(1000);
+				}, 5000); // Waktu dalam milidetik (5 detik dalam contoh ini)
+		
+				// Fungsi untuk menyembunyikan alert saat tombol close di klik
+				$(".alert .close").click(function(){
+					$(".alert").fadeOut(1000);
+				});
+			});
+		</script>
+		@endsection
 	</body>
 	</html>
