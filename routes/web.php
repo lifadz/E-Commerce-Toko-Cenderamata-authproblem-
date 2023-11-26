@@ -8,6 +8,7 @@ use App\Http\Controllers\admin\BrandController;
 use App\Http\Controllers\admin\CategoryController;
 use App\Http\Controllers\admin\HomeController;
 use App\Http\Controllers\admin\ProductController;
+use App\Http\Controllers\admin\ProductSubCategoryController;
 use App\Http\Controllers\admin\SubCategoryController;
 use App\Models\Brand;
 use Illuminate\Http\Request;
@@ -54,7 +55,7 @@ Route::group(['prefix' => 'admin'],function (){
 
         //Route Sub-kategori
         Route::get('/sub-kategori',[SubCategoryController::class,'index'])->name('sub-categories.index');
-        Route::get('/sub-kategori/membuat-sub-kategori',[SubCategoryController::class,'create'])->name('sub-categories.create');
+        Route::get('/sub-kategori/membuat-sub_kategori',[SubCategoryController::class,'create'])->name('sub-categories.create');
         Route::post('/sub-kategori',[SubCategoryController::class,'store'])->name('sub-categories.store');
         Route::get('/sub-kategori/{subCategory}/edit-sub-kategori',[SubCategoryController::class,'edit'])->name('sub-categories.edit');
         Route::put('/sub-kategori/{subCategory}',[SubCategoryController::class,'update'])->name('sub-categories.update');
@@ -70,6 +71,10 @@ Route::group(['prefix' => 'admin'],function (){
         
         //Route Produk
         Route::get('/produk/menambah-produk',[ProductController::class,'create'])->name('products.create');
+        Route::get('/produk-sub_kategori',[ProductSubCategoryController::class,'index'])->name('product-sub_categories.index');
+        Route::post('/produk',[ProductController::class,'store'])->name('products.store');
+
+
 
 
 
