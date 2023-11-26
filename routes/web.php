@@ -4,8 +4,12 @@ use App\Http\Controllers\admin\TempImagesController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\admin\AdminLoginController;
+use App\Http\Controllers\admin\BrandController;
 use App\Http\Controllers\admin\CategoryController;
 use App\Http\Controllers\admin\HomeController;
+use App\Http\Controllers\admin\ProductController;
+use App\Http\Controllers\admin\SubCategoryController;
+use App\Models\Brand;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use PHPUnit\Framework\MockObject\Generator\OriginalConstructorInvocationRequiredException;
@@ -42,13 +46,40 @@ Route::group(['prefix' => 'admin'],function (){
 
         //Route Kategori
         Route::get('/kategori',[CategoryController::class,'index'])->name('categories.index');
-        Route::get('/kategori/tambah-kategori',[CategoryController::class,'create'])->name('categories.create');
+        Route::get('/kategori/membuat-kategori',[CategoryController::class,'create'])->name('categories.create');
         Route::post('/kategori',[CategoryController::class,'store'])->name('categories.store');
         Route::get('/kategori/{category}/edit-kategori',[CategoryController::class,'edit'])->name('categories.edit');
         Route::put('/kategori/{category}',[CategoryController::class,'update'])->name('categories.update');
         Route::delete('/kategori/{category}',[CategoryController::class,'destroy'])->name('categories.delete');
 
+        //Route Sub-kategori
+        Route::get('/sub-kategori',[SubCategoryController::class,'index'])->name('sub-categories.index');
+        Route::get('/sub-kategori/membuat-sub-kategori',[SubCategoryController::class,'create'])->name('sub-categories.create');
+        Route::post('/sub-kategori',[SubCategoryController::class,'store'])->name('sub-categories.store');
+        Route::get('/sub-kategori/{subCategory}/edit-sub-kategori',[SubCategoryController::class,'edit'])->name('sub-categories.edit');
+        Route::put('/sub-kategori/{subCategory}',[SubCategoryController::class,'update'])->name('sub-categories.update');
+        Route::delete('/sub-kategori/{subCategory}',[SubCategoryController::class,'destroy'])->name('sub-categories.delete');
 
+        //Route Brands
+        Route::get('/brand',[BrandController::class,'index'])->name('brands.index');
+        Route::get('/brand/menambah-brand',[BrandController::class,'create'])->name('brands.create');
+        Route::post('/brand',[BrandController::class,'store'])->name('brands.store');
+        Route::get('/brand/{brand}/edit-brand',[BrandController::class,'edit'])->name('brands.edit');
+        Route::put('/brand/{brand}',[BrandController::class,'update'])->name('brands.update');
+        Route::delete('/brand/{brand}',[BrandController::class,'destroy'])->name('brands.delete');
+        
+        //Route Produk
+        Route::get('/produk/menambah-produk',[ProductController::class,'create'])->name('products.create');
+
+
+
+
+
+
+
+
+
+        
         //temp image category
         Route::post('/upload-temp-image',[TempImagesController::class,'create'])->name('temp-images.create');
 

@@ -4,12 +4,16 @@
 
 @section('content')
 
-@include('admin.message')
+@extends('admin.message')
 
 
 
 <div class="container">
     <h2>Profile</h2>
+
+    {{-- <div class="col-sm-19 text-right">
+        <a href="{{route('admin.dashboard')}}" class="btn btn-primary">Kembali</a>
+    </div> --}}
     
     <form action="{{ route('admin.updateProfile') }}" method="post" enctype="multipart/form-data">
         @csrf
@@ -36,6 +40,7 @@
             <input type="email" name="email" value="{{ old('email', Auth::user()->email) }}" class="form-control" required>
         </div>
         <button type="submit" class="btn btn-primary">Perbarui Profil</button>
+        <a href="{{route('admin.dashboard')}}" class="btn btn-danger ml-3">Batal</a>
     </form>
 </div>
 

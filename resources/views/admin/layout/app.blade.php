@@ -13,6 +13,8 @@
 
 	<link rel="stylesheet" href="{{asset('admin-assets/plugins/dropzone/min/dropzone.min.css')}}">
 
+	<link rel="stylesheet" href="{{asset('admin-assets/plugins/summernote/summernote.min.css')}}">
+
 	<link rel="stylesheet" href="{{asset('admin-assets/css/custom.css')}}">
 	
 	<link rel="icon" href="{{asset('admin-assets/img/logofajrii.png')}}">
@@ -79,7 +81,7 @@
 		<!-- Content Wrapper. Contains page content -->
 		<div class="content-wrapper">
 			
-			@yield('content')
+		@yield('content')
 			
 		</div>
 		<!-- /.content-wrapper -->
@@ -100,6 +102,7 @@
 
 		<script src="{{asset('admin-assets/plugins/dropzone/min/dropzone.min.js')}}"></script>
 
+		<script src="{{asset('admin-assets/plugins/summernote/summernote.min.js')}}"></script>
 
 		<!-- AdminLTE for demo purposes -->
 		<script src="{{asset('admin-assets/js/demo.js')}}"></script>
@@ -122,25 +125,18 @@
 				headers: {
 					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 				}
+			});
+
+			$(document).ready(function(){
+				$(".summernote").summernote({
+					height: 250
+				});
 			})
 		</script>
 
-		@yield('customJs')
+		@yield('delete-Js')
 
-		@section('autoclose')
-		<script>
-			$(document).ready(function(){
-				// Fungsi untuk menyembunyikan alert setelah 5 detik
-				setTimeout(function(){
-					$(".alert").fadeOut(1000);
-				}, 5000); // Waktu dalam milidetik (5 detik dalam contoh ini)
-		
-				// Fungsi untuk menyembunyikan alert saat tombol close di klik
-				$(".alert .close").click(function(){
-					$(".alert").fadeOut(1000);
-				});
-			});
-		</script>
-		@endsection
+		@yield('generate-slug_Js')
+
 	</body>
 	</html>

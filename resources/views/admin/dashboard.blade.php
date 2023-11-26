@@ -65,10 +65,10 @@
 <!-- /.content -->
 @endsection
 
-@section('customJs')
+{{-- @section('customJs')
 
 <script>
 	console.log("hello")
 </script>
 
-@endsection
+@endsection --}}

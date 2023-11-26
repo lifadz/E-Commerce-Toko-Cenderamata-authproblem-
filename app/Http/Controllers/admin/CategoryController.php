@@ -183,7 +183,7 @@ class CategoryController extends Controller
 
         $category->delete();
 
-        // session()->flash('success','Kategori berhasil dihapus');
+        session()->flash('success','Kategori berhasil dihapus');
 
         return response()->json([
             'status' => true,
