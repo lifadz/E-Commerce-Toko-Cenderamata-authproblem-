@@ -64,7 +64,7 @@
 <!-- /.content -->
 @endsection
 
-@section('customJs')
+@section('editJs')
 
 <script>
     $(document).ready(function () {

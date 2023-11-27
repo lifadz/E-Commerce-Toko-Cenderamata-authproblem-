@@ -49,6 +49,9 @@ class BrandController extends Controller
             $brand->status = $request->status;
             $brand->save();
 
+            session()->flash('success', 'Brand Berhasil Ditambahkan');
+
+
             return response()->json([
                 'status' => true,
                 'message' => 'Brand berhasil ditambahkan'

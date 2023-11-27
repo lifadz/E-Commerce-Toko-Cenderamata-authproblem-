@@ -136,7 +136,9 @@
 
 		@yield('delete-Js')
 
-		@yield('generate-slug_Js')
+		@yield('createJs')
+
+		@yield('editJs')
 
 	</body>
 	</html>

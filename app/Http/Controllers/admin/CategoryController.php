@@ -116,6 +116,7 @@ class CategoryController extends Controller
             $category->slug = $request->slug;
             $category->status = $request->status;
             $category->save();
+            
 
             $oldImage = $category->image;
             
@@ -149,13 +150,13 @@ class CategoryController extends Controller
                 File::delete(public_path().'/upload/kategori/'.$oldImage);
             }
             
-    
             session()->flash('success', 'Kategori Berhasil Diperbarui');
     
             return response()->json([
                 'status' => true,
                 'message' => 'Kategori Berhasil Dibuat'
             ]);
+            
         } else {
             return response()->json([
                 'status' => false,

@@ -76,7 +76,7 @@
 <!-- /.content --> 
 @endsection
 
-@section('customJs')
+@section('editJs')
 
 <script>
     $(document).ready(function () {
@@ -108,7 +108,6 @@
                     } else {
                         if(response['notFound'] == true) {
                             window.location.href="{{route('categories.index')}}";
-
                         }
 
                         var errors = response.errors;

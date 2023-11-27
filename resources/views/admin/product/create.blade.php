@@ -159,7 +159,7 @@
                         <div class="card-body">	
                             <h2 class="h4 mb-3">Product brand</h2>
                             <div class="mb-3">
-                                <select name="status" id="status" class="form-control">
+                                <select name="brand" id="brand" class="form-control">
                                     <option value="">Pilih Brand</option>
                                     @if ($brands->isNotEmpty())
                                         @foreach ($brands as $brand)
@@ -198,7 +198,7 @@
 <!-- /.content -->
 @endsection
 
-@section('generate-slug_Js')
+@section('createJs')
 <script>
     $("#title").change(function () {
         element = $(this);
@@ -222,6 +222,8 @@
     $("#productForm").submit(function(event){
         event.preventDefault();
         var formArray = $(this).serializeArray();
+        $("button[type='submit']").prop('disabled', true);
+
 
         $.ajax({
             url: '{{route("products.store")}}',
@@ -229,6 +231,8 @@
             data: formArray,
             dataType: 'json',
             success: function(response) {
+                $("button[type='submit']").prop('disabled', false);
+
                 if(response['status'] == true){
 
                 } else {
@@ -276,7 +280,7 @@
                 // console.log(response);
                 $("#sub_category").find("option").not(":first").remove();
                 $.each(response["subCategories"],function(key,item){
-                    $("#sub_category").append(`<option = '${item.id}'> ${item.nama} </option>`)
+                    $("#sub_category").append(`<option value='${item.id}'> ${item.nama} </option>`)
                 });
             },
             error: function(){

@@ -109,6 +109,15 @@
 <!-- /.content -->
 @endsection
 
+{{-- auto close alert notification --}}
+<script>
+    window.setTimeout(function() {
+      $(".alert").fadeTo(500, 0).slideUp(500, function(){
+        $(this).remove(); 
+      });
+    }, 1500);
+  </script>
+
 @section('delete-Js')
 <script>
      function deleteCategory(id) {

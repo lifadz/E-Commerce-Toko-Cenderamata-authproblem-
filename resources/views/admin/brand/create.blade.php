@@ -9,7 +9,7 @@
                 <h1>Tambah Brand</h1>
             </div>
             <div class="col-sm-6 text-right">
-                <a href="{{route('brands.index')}}" class="btn btn-primary">Back</a>
+                <a href="{{route('brands.index')}}" class="btn btn-primary">Kembali</a>
             </div>
         </div>
     </div>
@@ -32,14 +32,14 @@
                         </div>
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label for="email">Slug</label>
+                                <label for="slug">Slug</label>
                                 <input type="text" readonly name="slug" id="slug" class="form-control" placeholder="Slug">
                                 <p></p>	
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label for="email">Status Brand</label>
+                                <label for="status">Status Brand</label>
                                 <select name="status" id="status" class="form-control">
                                     <option value="1">Aktif</option>
                                     <option value="0">Tidak Aktif</option>
@@ -61,7 +61,7 @@
 <!-- /.content -->
 @endsection
 
-@section('generate-slug_Js')
+@section('createJs')
 
 <script>
     $(document).ready(function () {
@@ -81,15 +81,15 @@
                     
                     if (response.status === true) {
                         
-                        // window.location.href="{{route('categories.index')}}";
+                        window.location.href="{{route('brands.index')}}";
                         
-                        // $("#nama").removeClass('is-invalid')
-                        // .siblings('p')
-                        // .removeClass('invalid-feedback').html("");
+                        $("#nama").removeClass('is-invalid')
+                        .siblings('p')
+                        .removeClass('invalid-feedback').html("");
                         
-                        // $("#slug").removeClass('is-invalid')
-                        // .siblings('p')
-                        // .removeClass('invalid-feedback').html("");
+                        $("#slug").removeClass('is-invalid')
+                        .siblings('p')
+                        .removeClass('invalid-feedback').html("");
                         
                         
                         // Reset the form or perform any other actions on success

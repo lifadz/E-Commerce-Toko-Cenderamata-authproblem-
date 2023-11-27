@@ -41,7 +41,7 @@ class ProductController extends Controller
             'title' => 'required',
             'slug' => 'required|unique:products',
             'price' => 'required|numeric',
-            'sku' => 'required',
+            'sku' => 'required|unique:products',
             'track_qty' => 'required|in:Yes,No',
             'category' => 'required|numeric',
             'is_featured' => 'required|in:Yes,No',
@@ -64,11 +64,23 @@ class ProductController extends Controller
             $product->compare_price = $request->compare_price;
             $product->sku = $request->sku;
             $product->barcode = $request->barcode;
-            $product->title = $request->title;
-            $product->title = $request->title;
-            //video menit 53:19
-            
-            
+            $product->track_qty = $request->track_qty;
+            $product->qty = $request->qty;
+            $product->status = $request->status;
+            $product->category_id = $request->category;
+            $product->sub_category_id = $request->sub_category;
+            $product->brand_id = $request->brand;
+            $product->is_featured = $request->is_featured;
+
+            $product->save();
+
+            session()->flash('success', 'Produk Berhasil Ditambahkan');
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Produk berhasil ditambahkan'
+            ]);
+                        
         } else {
             return response()->json([
                 'status' => false,

@@ -65,6 +65,7 @@
 <!-- /.content -->
 @endsection
 
+
 {{-- @section('customJs')
 
 <script>

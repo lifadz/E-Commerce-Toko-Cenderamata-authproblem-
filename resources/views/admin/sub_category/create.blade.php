@@ -80,7 +80,7 @@
 <!-- /.content -->
 @endsection
 
-@section('generate-slug_Js')
+@section('createJs')
 
 <script>
     
