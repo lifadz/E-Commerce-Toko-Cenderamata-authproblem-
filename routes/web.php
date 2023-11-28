@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\admin\ProductImageController;
 use App\Http\Controllers\admin\TempImagesController;
 use Illuminate\Support\Facades\Route;
 
@@ -70,9 +71,19 @@ Route::group(['prefix' => 'admin'],function (){
         Route::delete('/brand/{brand}',[BrandController::class,'destroy'])->name('brands.delete');
         
         //Route Produk
+        Route::get('/produk',[ProductController::class,'index'])->name('products.index');
         Route::get('/produk/menambah-produk',[ProductController::class,'create'])->name('products.create');
-        Route::get('/produk-sub_kategori',[ProductSubCategoryController::class,'index'])->name('product-sub_categories.index');
         Route::post('/produk',[ProductController::class,'store'])->name('products.store');
+        Route::get('/produk/{product}/edit-produk',[ProductController::class,'edit'])->name('products.edit');
+        Route::put('/produk/{product}',[ProductController::class,'update'])->name('products.update');
+        
+        
+        Route::get('/produk-sub_kategori',[ProductSubCategoryController::class,'index'])->name('product-sub_categories.index');
+        
+        Route::post('/produk-gambar_produk/update',[ProductImageController::class,'update'])->name('product-images.update');
+        Route::delete('/produk-gambar_produk',[ProductImageController::class,'destroy'])->name('product-images.destroy');
+
+
 
 
 

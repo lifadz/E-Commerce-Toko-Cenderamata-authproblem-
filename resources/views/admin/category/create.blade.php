@@ -40,7 +40,7 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <input type="hidden" id="image_id" name="image_id" value="">
-                                <label for="image">Gambar Kategori</label>
+                                <label for="image">Media</label>
                                 <div id="image" class="dropzone dz-clickable">
                                     <div class="dz-message needsclick">    
                                         <br>Drag file kesini atau klik untuk upload.<br><br>                                            

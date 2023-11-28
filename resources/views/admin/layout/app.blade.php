@@ -88,7 +88,8 @@
 		<footer class="main-footer">
 			
 			<strong>Copyright &copy; 2023 Toko Fajri Craft All rights reserved.
-			</footer>
+				
+		</footer>
 			
 		</div>
 		<!-- ./wrapper -->

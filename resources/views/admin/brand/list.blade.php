@@ -2,7 +2,7 @@
 
 @section('content')
 
-@extends('admin.message')
+@include('admin.message')
 
 <!-- Content Header (Page header) -->
 <section class="content-header">					
@@ -117,6 +117,7 @@
       });
     }, 1500);
   </script>
+
 
 @section('delete-Js')
 <script>

@@ -9,7 +9,7 @@
                 <h1>Edit Sub-Kategori</h1>
             </div>
             <div class="col-sm-6 text-right">
-                <a href="{{route('sub-categories.index')}}" class="btn btn-primary">Back</a>
+                <a href="{{route('sub-categories.index')}}" class="btn btn-primary">Kembali</a>
             </div>
         </div>
     </div>

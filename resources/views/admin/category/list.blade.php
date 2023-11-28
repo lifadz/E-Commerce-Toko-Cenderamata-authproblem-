@@ -2,7 +2,6 @@
 
 @section('content')
 
-@extends('admin.message')
 
 <!-- Content Header (Page header) -->
 <section class="content-header">					
@@ -20,8 +19,10 @@
 </section>
 <!-- Main content -->
 <section class="content">
+    
     <!-- Default box -->
     <div class="container-fluid">
+        @include('admin.message')   
         <div class="card">
             <form action="" method="get">
                 <div class="card-header">
@@ -111,16 +112,23 @@
 
 {{-- Auto close alert notification --}}
 <script>
+    
+    // window.setTimeout(function() {
+    //     $(".alert").fadeTo(500, 0, function(){
+    //         $(this).remove(); 
+    //     });
+    // }, 1500);
+
     window.setTimeout(function() {
-        $(".alert").fadeTo(500, 0, function(){
-            $(this).remove(); 
-        });
+      $(".alert").fadeTo(500, 0).slideUp(500, function(){
+        $(this).remove(); 
+      });
     }, 1500);
 </script>
 
 @section('delete-Js')
 <script>
-     function deleteCategory(id) {
+    function deleteCategory(id) {
         var url = '{{ route("categories.delete", "ID") }}';
         var newUrl = url.replace("ID", id);
         
@@ -149,13 +157,13 @@
                                 title: "Berhasil!",
                                 text: "Data telah dihapus",
                                 icon: "success"
-
+                                
                                 
                             }).then(() => {
                                 
                                 // Toastr untuk menampilkan notifikasi
                                 toastr.info("Data sedang dihapus");
-
+                                
                                 // Redirect setelah menutup notifikasi
                                 setTimeout(function () {
                                     window.location.href = "{{ route('categories.index') }}";
@@ -176,33 +184,33 @@
         });
     }
     // function deleteCategory(id){
-    //         var url = '{{route("categories.delete","ID")}}';
-    //         var newUrl = url.replace("ID",id)
+        //         var url = '{{route("categories.delete","ID")}}';
+        //         var newUrl = url.replace("ID",id)
         
-    //         if(confirm("Apa kau yakin ingin menghapusnya ?")){
-    //                 $.ajax({
-    //                         url: newUrl,
-    //                         type: 'delete',
-    //                         data: {},
-    //                         dataType: 'json',
-    //                         headers: {
-    //                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-    //                             },
-    //                             success: function (response) {
+        //         if(confirm("Apa kau yakin ingin menghapusnya ?")){
+            //                 $.ajax({
+                //                         url: newUrl,
+                //                         type: 'delete',
+                //                         data: {},
+                //                         dataType: 'json',
+                //                         headers: {
+                    //                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                    //                             },
+                    //                             success: function (response) {
                         
-    //                                     if (response["status"] ) {
+                        //                                     if (response["status"] ) {
                             
-    //                                             window.location.href="{{route('categories.index')}}";
-    //                                         } 
-    //                                     }
-    //                                 })
-    //                             }
-    //                         }
-</script>
-@endsection
-
-
-                    
+                            //                                             window.location.href="{{route('categories.index')}}";
+                            //                                         } 
+                            //                                     }
+                            //                                 })
+                            //                             }
+                            //                         }
+                    </script>
+ @endsection
+                        
+                        
+                        
                         
                         
                         
