@@ -13,12 +13,12 @@ use Intervention\Image\Facades\Image;
 class CategoryController extends Controller
 {
     public function index(Request $request){
-        $categories = Category::orderBy('id', $request->sort ?? 'asc');
+        $categories = Category::orderBy('id', $request->sort ?? 'asc')
+        ->paginate(8);;
         
         if(!empty($request->get('keyword'))){
-            $categories = $categories->where('nama','like','%'.$request->get('keyword').'%');
+            $categories = $categories->where('name','like','%'.$request->get('keyword').'%');
         }
-        $categories = $categories->paginate(10);
 
         return view('admin.category.list',compact('categories'));
     }
@@ -29,13 +29,13 @@ class CategoryController extends Controller
 
     public function store(Request $request){
         $validator = Validator::make($request->all(), [
-            'nama' => 'required',
+            'name' => 'required',
             'slug' => 'required|unique:categories',
         ]);
     
         if ($validator->passes()) {
             $category = new Category();
-            $category->nama = $request->nama;
+            $category->name = $request->name;
             $category->slug = $request->slug;
             $category->status = $request->status;
             $category->save();
@@ -43,11 +43,11 @@ class CategoryController extends Controller
             //Menyimpan gambar
             if(!empty($request->image_id)){
                 $tempImage = TempImage::find($request->image_id);
-                $extArray = explode('.',$tempImage->nama);
+                $extArray = explode('.',$tempImage->name);
                 $ext = last($extArray);
 
                 $newImageName = $category->id.'.'.$ext;
-                $sPath = public_path().'/temp/'.$tempImage->nama;
+                $sPath = public_path().'/temp/'.$tempImage->name;
                 $dPath = public_path().'/upload/kategori/'.$newImageName;
                 File::copy($sPath,$dPath);
 
@@ -107,12 +107,12 @@ class CategoryController extends Controller
         }
 
         $validator = Validator::make($request->all(), [
-            'nama' => 'required',
+            'name' => 'required',
             'slug' => 'required|unique:categories,slug,'.$category->id.',id',
         ]);
     
         if ($validator->passes()) {
-            $category->nama = $request->nama;
+            $category->name = $request->name;
             $category->slug = $request->slug;
             $category->status = $request->status;
             $category->save();
@@ -123,11 +123,11 @@ class CategoryController extends Controller
             //Menyimpan gambar
             if(!empty($request->image_id)){
                 $tempImage = TempImage::find($request->image_id);
-                $extArray = explode('.',$tempImage->nama);
+                $extArray = explode('.',$tempImage->name);
                 $ext = last($extArray);
 
                 $newImageName = $category->id.'-'.time().'.'.$ext;
-                $sPath = public_path().'/temp/'.$tempImage->nama;
+                $sPath = public_path().'/temp/'.$tempImage->name;
                 $dPath = public_path().'/upload/kategori/'.$newImageName;
                 File::copy($sPath,$dPath);
 

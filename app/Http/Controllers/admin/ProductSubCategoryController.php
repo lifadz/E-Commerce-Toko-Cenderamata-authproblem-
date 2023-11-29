@@ -13,7 +13,7 @@ class ProductSubCategoryController extends Controller
         if(!empty($request->category_id)){
             
             $subCategories = SubCategory::where('category_id',$request->category_id)
-            ->orderBy('nama','ASC')
+            ->orderBy('name','ASC')
             ->get();
             
             return response()->json([

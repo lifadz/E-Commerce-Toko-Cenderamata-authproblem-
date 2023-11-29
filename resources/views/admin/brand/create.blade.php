@@ -26,7 +26,7 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="name">Nama Brand</label>
-                                <input type="text" name="nama" id="nama" class="form-control" placeholder="Nama Brand">	
+                                <input type="text" name="name" id="name" class="form-control" placeholder="Nama Brand">	
                                 <p></p>
                             </div>
                         </div>
@@ -83,7 +83,7 @@
                         
                         window.location.href="{{route('brands.index')}}";
                         
-                        $("#nama").removeClass('is-invalid')
+                        $("#name").removeClass('is-invalid')
                         .siblings('p')
                         .removeClass('invalid-feedback').html("");
                         
@@ -95,12 +95,12 @@
                         // Reset the form or perform any other actions on success
                     } else {
                         var errors = response.errors;
-                        if (errors['nama']) {
-                            $("#nama").addClass('is-invalid')
+                        if (errors['name']) {
+                            $("#name").addClass('is-invalid')
                             .siblings('p')
-                            .addClass('invalid-feedback').html(errors['nama']);
+                            .addClass('invalid-feedback').html(errors['name']);
                         } else {
-                            $("#nama").removeClass('is-invalid')
+                            $("#name").removeClass('is-invalid')
                             .siblings('p')
                             .removeClass('invalid-feedback').html("");
                         }
@@ -122,7 +122,7 @@
         });
     });
     
-    $("#nama").change(function () {
+    $("#name").change(function () {
         element = $(this);
         $("button[type=submit]").prop("disabled", true);
         $.ajax({

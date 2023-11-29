@@ -17,7 +17,7 @@ class TempImagesController extends Controller
             $newName = time().'.'.$ext;
 
             $tempImage = new TempImage();
-            $tempImage->nama = $newName;
+            $tempImage->name = $newName;
             $tempImage->save();
 
             $image->move(public_path().'/temp',$newName);

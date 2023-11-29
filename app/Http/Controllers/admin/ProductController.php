@@ -10,6 +10,7 @@ use App\Models\ProductImage;
 use App\Models\SubCategory;
 use App\Models\TempImage;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
 use Intervention\Image\Facades\Image;
 
@@ -26,13 +27,16 @@ class ProductController extends Controller
         
         // $data['products'] = $products;
         // return view('admin.product.list',$data);
-        $products = Product::orderBy('id', $request->sort ?? 'asc')->with('product_images');
+        $products = Product::orderBy('id', $request->sort ?? 'asc')
+        ->with('product_images')
+        ->paginate(5);
+        
         $data['products'] = $products;
         
         if(!empty($request->get('keyword'))){
-            $products = $products->where('title','like','%'.$request->get('keyword').'%');
+            $products = $products->where('title','like','%'.$request
+            ->get('keyword').'%');
         }
-        $products = $products->paginate(10);
 
         return view('admin.product.list',compact('products'));
     }
@@ -43,8 +47,8 @@ class ProductController extends Controller
     public function create()
     {
         $data = [];
-        $categories = Category::orderBy('nama', 'ASC')->get();
-        $brands = Brand::orderBy('nama', 'ASC')->get();
+        $categories = Category::orderBy('name', 'ASC')->get();
+        $brands = Brand::orderBy('name', 'ASC')->get();
         $data['categories'] = $categories;
         $data['brands'] = $brands;
         return view('admin.product.create',$data);
@@ -101,7 +105,7 @@ class ProductController extends Controller
                 foreach($request->image_array as $temp_image_id){
                     
                     $tempImageInfo = TempImage::find($temp_image_id);
-                    $extArray = explode('.',$tempImageInfo->nama);
+                    $extArray = explode('.',$tempImageInfo->name);
                     $ext = last($extArray);
 
                     
@@ -119,7 +123,7 @@ class ProductController extends Controller
 
                     //Gambar ukuran large
 
-                    $sourcePath = public_path().'/temp/'.$tempImageInfo->nama;
+                    $sourcePath = public_path().'/temp/'.$tempImageInfo->name;
                     $destPath = public_path().'/upload/produk/gambar_large/'.$imageName;
                     $image = Image::make($sourcePath);
                     $image->resize(1400,null,function($constraint){
@@ -182,8 +186,8 @@ class ProductController extends Controller
         
 
         $data = [];
-        $categories = Category::orderBy('nama', 'ASC')->get();
-        $brands = Brand::orderBy('nama', 'ASC')->get();
+        $categories = Category::orderBy('name', 'ASC')->get();
+        $brands = Brand::orderBy('name', 'ASC')->get();
         $data['categories'] = $categories;
         $data['brands'] = $brands;
         $data['product'] = $product;
@@ -258,8 +262,41 @@ class ProductController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id,Request $request)
     {
-        //
+        $product = Product::find($id);
+        
+        if(empty($product)){
+            session()->flash('error','Produk tidak ditemukan');
+
+            return response()->json([
+                'status' => false,
+                'notFound' => true
+            ]);
+        }
+        
+        $productImages = ProductImage::where('product_id',$id)->get();
+
+        if(!empty($productImages)){
+            foreach($productImages as $productImage){
+                
+                File::delete(public_path('upload/produk/gambar_large/'.$productImage->image));
+                File::delete(public_path('upload/produk/gambar_small/'.$productImage->image));
+            }
+            
+            ProductImage::where('product_id',$id)->delete();
+        }
+
+        $product->delete();
+        dd('Controller action called with ID: ' . $id); //untuk check
+
+        session()->flash('success','Produk berhasil dihapus');
+
+        if(empty($product)){
+            return response()->json([
+                'status' => true,
+                'message' => 'Produk berhasil dihapus'
+            ]);
+        }
     }
 }

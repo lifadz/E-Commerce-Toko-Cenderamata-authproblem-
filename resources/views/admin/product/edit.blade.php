@@ -154,7 +154,7 @@
                                     @if ($categories->isNotEmpty())
                                         @foreach ($categories as $category)
 
-                                            <option {{($product->category_id == $category->id) ? 'selected' : ''}} value="{{ $category->id}}">{{$category->nama}}</option>
+                                            <option {{($product->category_id == $category->id) ? 'selected' : ''}} value="{{ $category->id}}">{{$category->name}}</option>
                                     
                                         @endforeach
                                     @endif
@@ -170,7 +170,7 @@
                                     @if ($subCategories->isNotEmpty())
                                         @foreach ($subCategories as $subCategory)
 
-                                            <option {{($product->sub_category_id == $subCategory->id) ? 'selected' : ''}} value="{{ $subCategory->id}}">{{$subCategory->nama}}</option>
+                                            <option {{($product->sub_category_id == $subCategory->id) ? 'selected' : ''}} value="{{ $subCategory->id}}">{{$subCategory->name}}</option>
                                     
                                         @endforeach
                                     @endif
@@ -188,7 +188,7 @@
                                     @if ($brands->isNotEmpty())
                                         @foreach ($brands as $brand)
 
-                                            <option {{($product->brand_id == $brand->id) ? 'selected' : ''}}  value="{{ $brand->id}}">{{$brand->nama}}</option>
+                                            <option {{($product->brand_id == $brand->id) ? 'selected' : ''}}  value="{{ $brand->id}}">{{$brand->name}}</option>
                                     
                                         @endforeach
                                     @endif
@@ -307,7 +307,7 @@
                 // console.log(response);
                 $("#sub_category").find("option").not(":first").remove();
                 $.each(response["subCategories"],function(key,item){
-                    $("#sub_category").append(`<option value='${item.id}'> ${item.nama} </option>`)
+                    $("#sub_category").append(`<option value='${item.id}'> ${item.name} </option>`)
                 });
             },
             error: function(){
@@ -366,3 +366,5 @@
     
 </script>
 @endsection
+
+{{-- ngijo delete --}}

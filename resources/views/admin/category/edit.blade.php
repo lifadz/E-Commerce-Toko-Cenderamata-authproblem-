@@ -25,8 +25,8 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label for="nama">Nama Kategori</label>
-                                <input type="text" name="nama" id="nama" class="form-control" placeholder="Nama Kategori" value="{{$category->nama}}">
+                                <label for="name">Nama Kategori</label>
+                                <input type="text" name="name" id="name" class="form-control" placeholder="Nama Kategori" value="{{$category->name}}">
                                 <p></p>	
                             </div>
                         </div>
@@ -96,7 +96,7 @@
                         
                         window.location.href="{{route('categories.index')}}";
                         
-                        $("#nama").removeClass('is-invalid')
+                        $("#name").removeClass('is-invalid')
                         .siblings('p')
                         .removeClass('invalid-feedback').html("");
                         
@@ -111,12 +111,12 @@
                         }
 
                         var errors = response.errors;
-                        if (errors.nama) {
-                            $("#nama").addClass('is-invalid')
+                        if (errors.name) {
+                            $("#name").addClass('is-invalid')
                             .siblings('p')
-                            .addClass('invalid-feedback').html(errors.nama);
+                            .addClass('invalid-feedback').html(errors.name);
                         } else {
-                            $("#nama").removeClass('is-invalid')
+                            $("#name").removeClass('is-invalid')
                             .siblings('p')
                             .removeClass('invalid-feedback').html("");
                         }
@@ -138,7 +138,7 @@
         });
     });
     
-    $("#nama").change(function () {
+    $("#name").change(function () {
         element = $(this);
         $("button[type=submit]").prop("disabled", true);
         $.ajax({

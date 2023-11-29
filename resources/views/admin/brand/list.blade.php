@@ -63,7 +63,7 @@
                         @foreach($brands as $brand)
                         <tr>
                             <td>{{$brand->id}}</td>
-                            <td>{{$brand->nama}}</td>
+                            <td>{{$brand->name}}</td>
                             <td>{{$brand->slug}}</td>
                             <td>
                                 

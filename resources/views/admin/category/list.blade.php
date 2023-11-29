@@ -64,7 +64,7 @@
                         @foreach($categories as $category)
                         <tr>
                             <td>{{$category->id}}</td>
-                            <td>{{$category->nama}}</td>
+                            <td>{{$category->name}}</td>
                             <td>{{$category->slug}}</td>
                             <td>
                                 

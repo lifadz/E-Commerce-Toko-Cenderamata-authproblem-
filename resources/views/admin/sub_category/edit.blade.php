@@ -25,7 +25,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="mb-3">
-                                <label for="nama">Kategori</label>
+                                <label for="name">Kategori</label>
                                 <select name="category" id="category" class="form-control">
                                     <option value="">Pilih kategori</option>
 
@@ -33,7 +33,7 @@
                                     
                                     @foreach($categories as $category)
                                     
-                                    <option {{($subCategory->category_id == $category->id)? 'selected' : ''}} value="{{$category->id}}">{{$category->nama}}</option>
+                                    <option {{($subCategory->category_id == $category->id)? 'selected' : ''}} value="{{$category->id}}">{{$category->name}}</option>
                                     
                                     @endforeach
                                     
@@ -44,8 +44,8 @@
                         </div>
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label for="nama">Nama Sub-Kategori</label>
-                                <input type="text" name="nama" id="nama" class="form-control" placeholder="Nama Sub-Kategori" value="{{$subCategory->nama}}">
+                                <label for="name">Nama Sub-Kategori</label>
+                                <input type="text" name="name" id="name" class="form-control" placeholder="Nama Sub-Kategori" value="{{$subCategory->name}}">
                                 <p></p>	
                             </div>
                         </div>
@@ -102,7 +102,7 @@
                     
                     window.location.href="{{route('sub-categories.index')}}";
                     
-                    $("#nama").removeClass('is-invalid')
+                    $("#name").removeClass('is-invalid')
                     .siblings('p')
                     .removeClass('invalid-feedback').html("");
                     
@@ -123,12 +123,12 @@
                     }
 
                     var errors = response.errors;
-                    if (errors['nama']) {
-                        $("#nama").addClass('is-invalid')
+                    if (errors['name']) {
+                        $("#name").addClass('is-invalid')
                         .siblings('p')
-                        .addClass('invalid-feedback').html(errors['nama']);
+                        .addClass('invalid-feedback').html(errors['name']);
                     } else {
-                        $("#nama").removeClass('is-invalid')
+                        $("#name").removeClass('is-invalid')
                         .siblings('p')
                         .removeClass('invalid-feedback').html("");
                     }
@@ -163,7 +163,7 @@
         });
     });
     
-    $("#nama").change(function () {
+    $("#name").change(function () {
         element = $(this);
         $("button[type=submit]").prop("disabled", true);
         $.ajax({

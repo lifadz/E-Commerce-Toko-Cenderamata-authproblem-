@@ -109,7 +109,7 @@
                                                 <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"></path>
                                             </svg>
                                         </a>
-                                        <a href="#" class="text-danger w-4 h-4 mr-1">
+                                        <a href="#" onclick="deleteProduct({{$product->id}})" class="text-danger w-4 h-4 mr-1">
                                             <svg wire:loading.remove.delay="" wire:target="" class="filament-link-icon w-4 h-4 mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                                 <path	ath fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"></path>
                                               </svg>
@@ -160,5 +160,83 @@
 </script>
 
 @section('delete-Js')
-    
+    <script>
+        function deleteProduct(id) {
+            console.log("Delete function called with ID:", id); //untuk ngechecj
+
+            var url = '{{ route("products.delete", "ID") }}';
+            var newUrl = url.replace("ID", id);
+
+            Swal.fire({
+                title: "Apa anda yakin?",
+                text: "Anda tidak akan bisa mengembalikan data ini!!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Ya, hapus datanya",
+                cancelButtonText: "Tidak, batalkan",
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: newUrl,
+                        type: 'delete',
+                        data: {},
+                        dataType: 'json',
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                        },
+                        success: function (response) {
+                            if (response["status"]) {
+                                // SweetAlert untuk berhasil
+                                Swal.fire({
+                                    title: "Berhasil!",
+                                    text: "Data telah dihapus",
+                                    icon: "success"
+                                }).then(() => {
+                                    // Toastr untuk menampilkan notifikasi
+                                    toastr.info("Data sedang dihapus");
+
+                                    // Redirect setelah menutup notifikasi
+                                    setTimeout(function () {
+                                        window.location.href = "{{ route('products.index') }}";
+                                    }, 1500);
+                                });
+                            }
+                        },
+                        error: function (jqXHR, exception) {
+                            console.log("Terjadi Kesalahan");
+                        }
+                    });
+                } else if (result.dismiss === Swal.DismissReason.cancel) {
+                    // SweetAlert untuk dibatalkan
+                    Swal.fire({
+                        title: "Dibatalkan",
+                        text: "Data tidak dihapus",
+                        icon: "error"
+                    });
+                }
+            });
+        }
+    //     function deleteProduct(id) {
+    //     var url = '{{ route("products.delete", "ID") }}';
+    //     var newUrl = url.replace("ID", id);
+
+    //     if(confirm("Apa kau yakin ingin menghapusnya?")){
+    //         $.ajax({
+    //                 url: newUrl,
+    //                 type: 'delete',
+    //                 data: {},
+    //                 dataType: 'json',
+    //                 success:function(response){
+    //                     if(response["status"] == true){
+    //                         window.location.href = "{{ route('products.index') }}";
+    //                     } else {
+    //                         window.location.href = "{{ route('products.index') }}";
+    //                     }
+    //                 }
+    //             })
+    //     }
+    // }
+        
+    </script>
 @endsection

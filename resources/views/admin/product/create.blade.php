@@ -142,7 +142,7 @@
                                     @if ($categories->isNotEmpty())
                                         @foreach ($categories as $category)
 
-                                            <option value="{{ $category->id}}">{{$category->nama}}</option>
+                                            <option value="{{ $category->id}}">{{$category->name}}</option>
                                     
                                         @endforeach
                                     @endif
@@ -167,7 +167,7 @@
                                     @if ($brands->isNotEmpty())
                                         @foreach ($brands as $brand)
 
-                                            <option value="{{ $brand->id}}">{{$brand->nama}}</option>
+                                            <option value="{{ $brand->id}}">{{$brand->name}}</option>
                                     
                                         @endforeach
                                     @endif
@@ -286,7 +286,7 @@
                 // console.log(response);
                 $("#sub_category").find("option").not(":first").remove();
                 $.each(response["subCategories"],function(key,item){
-                    $("#sub_category").append(`<option value='${item.id}'> ${item.nama} </option>`)
+                    $("#sub_category").append(`<option value='${item.id}'> ${item.name} </option>`)
                 });
             },
             error: function(){
