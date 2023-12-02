@@ -244,7 +244,7 @@ class ProductController extends Controller
 
             //Menyimpan galeri gambar
 
-            session()->flash('success', 'Produk berhasil diperbarui');
+            session()->flash('success', 'Data tersimpan');
 
             return response()->json([
                 'status' => true,
@@ -288,15 +288,12 @@ class ProductController extends Controller
         }
 
         $product->delete();
-        dd('Controller action called with ID: ' . $id); //untuk check
 
         session()->flash('success','Produk berhasil dihapus');
 
-        if(empty($product)){
-            return response()->json([
-                'status' => true,
-                'message' => 'Produk berhasil dihapus'
-            ]);
-        }
+        return response()->json([
+            'status' => true,
+            'message' => 'Produk berhasil dihapus'
+        ]);
     }
 }

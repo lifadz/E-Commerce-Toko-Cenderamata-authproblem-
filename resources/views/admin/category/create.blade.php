@@ -56,7 +56,16 @@
                                     <option value="0">Tidak Aktif</option>
                                 </select>
                             </div>
-                        </div>										
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="status">Tampilkan di Halaman Utama</label>
+                                <select name="showHome" id="showHome" class="form-control">
+                                    <option value="Yes">Ya</option>
+                                    <option value="No">Tidak</option>
+                                </select>
+                            </div>
+                        </div>											
                     </div>
                 </div>							
             </div>

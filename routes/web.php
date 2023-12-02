@@ -11,6 +11,8 @@ use App\Http\Controllers\admin\HomeController;
 use App\Http\Controllers\admin\ProductController;
 use App\Http\Controllers\admin\ProductSubCategoryController;
 use App\Http\Controllers\admin\SubCategoryController;
+use App\Http\Controllers\FrontController;
+use App\Http\Controllers\ShopController;
 use App\Models\Brand;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -26,9 +28,13 @@ use PHPUnit\Framework\MockObject\Generator\OriginalConstructorInvocationRequired
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+Route::get('/',[FrontController::class,'index'])->name('front.home');
+Route::get('/belanja',[ShopController::class,'index'])->name('front.shop');
+
 
 Route::group(['prefix' => 'admin'],function (){
     

@@ -61,6 +61,15 @@
                                     <option {{($category->status == 0) ? 'selected' : ''}} value="0">Tidak Aktif</option>
                                 </select>
                             </div>
+                        </div>	
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="status">Tampilkan di Halaman Utama</label>
+                                <select name="showHome" id="showHome" class="form-control">
+                                    <option {{($category->showHome == 'Yes') ? 'selected' : ''}} value="Yes">Ya</option>
+                                    <option {{($category->showHome == 'No') ? 'selected' : ''}} value="No">Tidak</option>
+                                </select>
+                            </div>
                         </div>										
                     </div>
                 </div>							

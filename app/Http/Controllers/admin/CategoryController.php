@@ -14,7 +14,7 @@ class CategoryController extends Controller
 {
     public function index(Request $request){
         $categories = Category::orderBy('id', $request->sort ?? 'asc')
-        ->paginate(8);;
+        ->paginate(8);
         
         if(!empty($request->get('keyword'))){
             $categories = $categories->where('name','like','%'.$request->get('keyword').'%');
@@ -38,6 +38,7 @@ class CategoryController extends Controller
             $category->name = $request->name;
             $category->slug = $request->slug;
             $category->status = $request->status;
+            $category->showHome = $request->showHome;
             $category->save();
 
             //Menyimpan gambar
@@ -115,6 +116,7 @@ class CategoryController extends Controller
             $category->name = $request->name;
             $category->slug = $request->slug;
             $category->status = $request->status;
+            $category->showHome = $request->showHome;
             $category->save();
             
 
@@ -150,7 +152,7 @@ class CategoryController extends Controller
                 File::delete(public_path().'/upload/kategori/'.$oldImage);
             }
             
-            session()->flash('success', 'Kategori Berhasil Diperbarui');
+            session()->flash('success', 'Data tersimpan');
     
             return response()->json([
                 'status' => true,

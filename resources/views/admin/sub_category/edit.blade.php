@@ -65,7 +65,16 @@
                                 </select>
                                 <p></p>
                             </div>
-                        </div>												
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="status">Tampilkan di Halaman Utama</label>
+                                <select name="showHome" id="showHome" class="form-control">
+                                    <option {{($subCategory->showHome == 'Yes')? 'selected' : ''}} value="Yes">Ya</option>
+                                    <option {{($subCategory->showHome == 'No')? 'selected' : ''}} value="No">Tidak</option>
+                                </select>
+                            </div>
+                        </div>													
                     </div>
                 </div>							
             </div>

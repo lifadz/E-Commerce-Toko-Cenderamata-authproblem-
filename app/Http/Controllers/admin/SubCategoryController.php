@@ -47,6 +47,7 @@ class SubCategoryController extends Controller
             $subCategory->slug = $request->slug;
             $subCategory->status = $request->status;
             $subCategory->category_id = $request->category;
+            $subCategory->showHome = $request->showHome;
             $subCategory->save();
             
             session()->flash('success','Sub-Kategori berhasil dibuat');
@@ -107,9 +108,10 @@ class SubCategoryController extends Controller
             $subCategory->slug = $request->slug;
             $subCategory->status = $request->status;
             $subCategory->category_id = $request->category;
+            $subCategory->showHome = $request->showHome;
             $subCategory->save();
             
-            session()->flash('success','Sub-Kategori berhasil diperbarui');
+            session()->flash('success','Data tersimpan');
             
             return response()->json([
                 'status' => true,

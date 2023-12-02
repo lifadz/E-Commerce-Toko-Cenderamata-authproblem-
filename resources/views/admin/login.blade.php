@@ -11,6 +11,8 @@
 		<!-- Theme style -->
 		<link rel="stylesheet" href="{{asset('admin-assets/css/adminlte.min.css')}}">
 		<link rel="stylesheet" href="{{asset('admin-assets/css/custom.css')}}">
+		<link rel="icon" href="{{asset('admin-assets/img/logofajrii.png')}}">
+
 
 		<style>
 			

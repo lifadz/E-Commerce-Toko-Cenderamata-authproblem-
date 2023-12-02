@@ -109,7 +109,7 @@ class BrandController extends Controller
             $brand->status = $request->status;
             $brand->save();
 
-            session()->flash('success', 'Brand Berhasil Diperbarui');
+            session()->flash('success', 'Data tersimpan');
 
 
             return response()->json([

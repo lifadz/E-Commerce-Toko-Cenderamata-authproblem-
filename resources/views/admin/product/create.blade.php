@@ -68,14 +68,14 @@
                                 <div class="col-md-12">
                                     <div class="mb-3">
                                         <label for="price">Harga</label>
-                                        <input type="text" name="price" id="price" class="form-control" placeholder="Price">
+                                        <input type="text" name="price" id="price" class="form-control" placeholder="Harga">
                                         <p class="error"></p>	
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="mb-3">
                                         <label for="compare_price">Harga Perbandingan</label>
-                                        <input type="text" name="compare_price" id="compare_price" class="form-control" placeholder="Compare Price">
+                                        <input type="text" name="compare_price" id="compare_price" class="form-control" placeholder="Harga Perbandingan">
                                         <p class="text-muted mt-3">
                                              Untuk memberi kesan pada pelanggan seolah harga sedang turun, masukkan harga yang sedikit lebih tinggi dari harga asli produk pada bagian "Harga Perbandingan" dan masukkan harga asli produk pada bagian "Harga".
                                         </p>	

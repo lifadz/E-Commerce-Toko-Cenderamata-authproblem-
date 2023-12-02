@@ -4,7 +4,7 @@
 
 @section('content')
 
-@extends('admin.message')
+@include('admin.message')
 
 
 
