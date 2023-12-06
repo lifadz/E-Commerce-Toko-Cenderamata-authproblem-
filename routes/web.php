@@ -37,11 +37,11 @@ use PHPUnit\Framework\MockObject\Generator\OriginalConstructorInvocationRequired
 Route::get('/',[FrontController::class,'index'])->name('front.home');
 Route::get('/belanja/{categorySlug?}/{subCategorySlug?}',[ShopController::class,'index'])->name('front.shop');
 Route::get('/produk/{slug}',[ShopController::class,'product'])->name('front.product');
-Route::get('/keranjang',[CartController::class,'cart'])->name('front.cart');
-Route::post('/tambah-ke-keranjang',[CartController::class,'addToCart'])->name('front.addToCart');
-Route::post('/update-keranjang',[CartController::class,'updateCart'])->name('front.updateCart');
-Route::post('/hapus-produk',[CartController::class,'deleteItem'])->name('front.deleteItem.cart');
-Route::get('/checkout',[CartController::class,'checkout'])->name('front.checkout');
+// Route::get('/keranjang',[CartController::class,'cart'])->name('front.cart');
+// Route::post('/tambah-ke-keranjang',[CartController::class,'addToCart'])->name('front.addToCart');
+// Route::post('/update-keranjang',[CartController::class,'updateCart'])->name('front.updateCart');
+// Route::post('/hapus-produk',[CartController::class,'deleteItem'])->name('front.deleteItem.cart');
+// Route::get('/checkout',[CartController::class,'checkout'])->name('front.checkout');
 
 
 Route::group(['prefix' => 'akun'],function (){
@@ -57,6 +57,11 @@ Route::group(['prefix' => 'akun'],function (){
     Route::group(['middleware' => 'auth'],function (){
         Route::get('/profile',[AuthController::class,'profile'])->name('account.profile');
         Route::get('/logout',[AuthController::class,'logout'])->name('account.logout');
+        Route::get('/keranjang',[CartController::class,'cart'])->name('front.cart');
+        Route::post('/tambah-ke-keranjang',[CartController::class,'addToCart'])->name('front.addToCart');
+        Route::post('/update-keranjang',[CartController::class,'updateCart'])->name('front.updateCart');
+        Route::post('/hapus-produk',[CartController::class,'deleteItem'])->name('front.deleteItem.cart');
+        Route::get('/checkout',[CartController::class,'checkout'])->name('front.checkout');
 
     });
 

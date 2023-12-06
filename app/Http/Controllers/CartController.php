@@ -55,6 +55,15 @@ class CartController extends Controller
             $status = true;
             $message = '<strong>'.$product->title.'</strong> berhasil ditambahkan ke dalam keranjangmu!';
         }
+        if(Auth::check() == false){
+            
+            if(!session()->has('url.intended')){
+                session(['url.intended' => url()->current()]);
+            } 
+            
+            return redirect()->route('account.login');
+            
+        }
         session()->flash('success',$message);
         return response()->json([
             'status' => $status,
