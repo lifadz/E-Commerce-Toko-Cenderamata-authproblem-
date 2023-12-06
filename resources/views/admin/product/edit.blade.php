@@ -41,10 +41,22 @@
                                 </div>
                                 <div class="col-md-12">
                                     <div class="mb-3">
+                                        <label for="description">Deskripsi Singkat</label>
+                                        <textarea name="short_description" id="short_description" cols="30" rows="10" class="summernote" placeholder="">{{$product->short_description}}</textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="mb-3">
                                         <label for="description">Deskripsi</label>
                                         <textarea name="description" id="description" cols="30" rows="10" class="summernote" placeholder="Deskripsi Produk">{{$product->description}}</textarea>
                                     </div>
-                                </div>                                            
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="mb-3">
+                                        <label for="description">Pengiriman Dan Pengembalian</label>
+                                        <textarea name="shipping_returns" id="shipping_returns" cols="30" rows="10" class="summernote" placeholder="Deskripsi Produk">{{$product->shipping_returns}}</textarea>
+                                    </div>
+                                </div>                                               
                             </div>
                         </div>	                                                                      
                     </div>
@@ -60,17 +72,17 @@
                     </div>
                     <div class="row" id="product-gallery">
                         @if ($productImages->isNotEmpty())
-                            @foreach ($productImages as $image)
-                            <div class="col-md-3" id="image-row-{{$image->id}}"> 
-                                <div class="card">
-                                    <input type="hidden" name="image_array[]" value="{{$image->id}}">
-                                    <img src="{{asset('upload/produk/gambar_small/'.$image->image)}}" class="card-img-top" alt="">
-                                    <div class="card-body">
-                                        <a href="javascript:void(0)" onclick="deleteImage({{$image->id}})" class="btn btn-danger">Hapus</a>
-                                    </div>
+                        @foreach ($productImages as $image)
+                        <div class="col-md-3" id="image-row-{{$image->id}}"> 
+                            <div class="card">
+                                <input type="hidden" name="image_array[]" value="{{$image->id}}">
+                                <img src="{{asset('upload/produk/gambar_small/'.$image->image)}}" class="card-img-top" alt="">
+                                <div class="card-body">
+                                    <a href="javascript:void(0)" onclick="deleteImage({{$image->id}})" class="btn btn-danger">Hapus</a>
                                 </div>
                             </div>
-                            @endforeach
+                        </div>
+                        @endforeach
                         @endif
                     </div>
                     <div class="card mb-3">
@@ -112,7 +124,7 @@
                                         <label for="barcode">Barcode</label>
                                         <input type="text" name="barcode" id="barcode" class="form-control" placeholder="Barcode" value="{{$product->barcode}}">	
                                     </div>
-                                </div>   
+                                </div>    
                                 <div class="col-md-12">
                                     <div class="mb-3">
                                         <div class="custom-control custom-checkbox">
@@ -129,6 +141,22 @@
                                 </div>                                         
                             </div>
                         </div>	                                                                      
+                    </div>
+
+                    <div class="card mb-3">
+                        <div class="card-body">	
+                            <h2 class="h4 mb-3">Produk Terkait</h2>
+                            <div class="mb-3">
+                                <select multiple class="related-product w-100" name="related_products[]" id="related_products">
+                                    @if (!empty($relatedProducts))
+                                        @foreach ($relatedProducts as $relProduct)
+                                            <option selected value="{{$relProduct->id}}">{{$relProduct->title}}</option>
+                                        @endforeach                                        
+                                    @endif
+                                </select>
+                                <p class="error"></p>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -152,11 +180,11 @@
                                     <option value="">Pilih Kategori</option>
                                     
                                     @if ($categories->isNotEmpty())
-                                        @foreach ($categories as $category)
-
-                                            <option {{($product->category_id == $category->id) ? 'selected' : ''}} value="{{ $category->id}}">{{$category->name}}</option>
+                                    @foreach ($categories as $category)
                                     
-                                        @endforeach
+                                    <option {{($product->category_id == $category->id) ? 'selected' : ''}} value="{{ $category->id}}">{{$category->name}}</option>
+                                    
+                                    @endforeach
                                     @endif
                                     
                                 </select>
@@ -166,15 +194,15 @@
                                 <label for="category">Sub-Kategori</label>
                                 <select name="sub_category" id="sub_category" class="form-control">
                                     <option value="">Pilih Sub-Kategori</option>
-
-                                    @if ($subCategories->isNotEmpty())
-                                        @foreach ($subCategories as $subCategory)
-
-                                            <option {{($product->sub_category_id == $subCategory->id) ? 'selected' : ''}} value="{{ $subCategory->id}}">{{$subCategory->name}}</option>
                                     
-                                        @endforeach
+                                    @if ($subCategories->isNotEmpty())
+                                    @foreach ($subCategories as $subCategory)
+                                    
+                                    <option {{($product->sub_category_id == $subCategory->id) ? 'selected' : ''}} value="{{ $subCategory->id}}">{{$subCategory->name}}</option>
+                                    
+                                    @endforeach
                                     @endif
-
+                                    
                                 </select>
                             </div>
                         </div>
@@ -186,11 +214,11 @@
                                 <select name="brand" id="brand" class="form-control">
                                     <option value="">Pilih Brand</option>
                                     @if ($brands->isNotEmpty())
-                                        @foreach ($brands as $brand)
-
-                                            <option {{($product->brand_id == $brand->id) ? 'selected' : ''}}  value="{{ $brand->id}}">{{$brand->name}}</option>
+                                    @foreach ($brands as $brand)
                                     
-                                        @endforeach
+                                    <option {{($product->brand_id == $brand->id) ? 'selected' : ''}}  value="{{ $brand->id}}">{{$brand->name}}</option>
+                                    
+                                    @endforeach
                                     @endif
                                 </select>
                             </div>
@@ -207,7 +235,7 @@
                                 <p class="error"></p>
                             </div>
                         </div>
-                    </div>                                 
+                    </div>
                 </div>
             </div>
             
@@ -224,6 +252,21 @@
 
 @section('editJs')
 <script>
+    $('.related-product').select2({
+        ajax: {
+            url: '{{ route("products.getProducts") }}',
+            dataType: 'json',
+            tags: true,
+            multiple: true,
+            minimumInputLength: 3,
+            processResults: function (data) {
+                return {
+                    results: data.tags
+                };
+            }
+        }
+    }); 
+    
     $("#title").change(function () {
         element = $(this);
         $("button[type=submit]").prop("disabled", true);
@@ -247,8 +290,8 @@
         event.preventDefault();
         var formArray = $(this).serializeArray();
         $("button[type='submit']").prop('disabled', true);
-
-
+        
+        
         $.ajax({
             url: '{{route("products.update",$product->id)}}',
             type: 'put',
@@ -256,114 +299,115 @@
             dataType: 'json',
             success: function(response) {
                 $("button[type='submit']").prop('disabled', false);
-
+                
                 if(response['status'] == true){
                     $(".error").removeClass('invalid-feedback').html('');
                     $("input[type='text'],select,input[type='number").removeClass('is-invalid');
-
+                    
                     window.location.href = "{{route('products.index')}}";
                 } else {
                     var errors = response['errors'];
-
+                    
                     // if(errors['title']){
-                    //     $("#title").addClass('is-invalid')
-                    //     .siblings('p')
-                    //     .addClass('invalid-feedback')
-                    //     .html(errors['title']);
-                    // } else{
-                    //     $("#title").removeClass('is-invalid')
-                    //     .siblings('p')
-                    //     .removeClass('invalid-feedback')
-                    //     .html("");
-                    // }
-
-                    $(".error").removeClass('invalid-feedback').html('');
-                    $("input[type='text'],select,input[type='number").removeClass('is-invalid');
-
-                    $.each(errors,function(key,value){
-                        $(`#${key}`).addClass('is-invalid')
-                        .siblings('p')
-                        .addClass('invalid-feedback')
-                        .html(value);
-                    });
-
-                }
-            },
-            error: function(){
-                console.log("Terjadi Sesuatu Yang Salah");
-            }
-        });
-    });
-
-    $("#category").change(function(){
-        var category_id = $(this).val();
-
-        $.ajax({
-            url: '{{route("product-sub_categories.index")}}',
-            type: 'get',
-            data: {category_id: category_id},
-            dataType: 'json',
-            success: function(response) {
-                // console.log(response);
-                $("#sub_category").find("option").not(":first").remove();
-                $.each(response["subCategories"],function(key,item){
-                    $("#sub_category").append(`<option value='${item.id}'> ${item.name} </option>`)
+                        //     $("#title").addClass('is-invalid')
+                        //     .siblings('p')
+                        //     .addClass('invalid-feedback')
+                        //     .html(errors['title']);
+                        // } else{
+                            //     $("#title").removeClass('is-invalid')
+                            //     .siblings('p')
+                            //     .removeClass('invalid-feedback')
+                            //     .html("");
+                            // }
+                            
+                            $(".error").removeClass('invalid-feedback').html('');
+                            $("input[type='text'],select,input[type='number").removeClass('is-invalid');
+                            
+                            $.each(errors,function(key,value){
+                                $(`#${key}`).addClass('is-invalid')
+                                .siblings('p')
+                                .addClass('invalid-feedback')
+                                .html(value);
+                            });
+                            
+                        }
+                    },
+                    error: function(){
+                        console.log("Terjadi Sesuatu Yang Salah");
+                    }
                 });
-            },
-            error: function(){
-                console.log("Terjadi Sesuatu Yang Salah");
-            }
-        });
-    });
-
-    Dropzone.autoDiscover = false;    
-    const dropzone = $("#image").dropzone({ 
-        url:  "{{ route('product-images.update') }}",
-        maxFiles: 10,
-        paramName: 'image',
-        params:{'product_id': '{{$product->id}}'},
-        addRemoveLinks: true,
-        acceptedFiles: "image/jpeg,image/png,image/gif",
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }, success: function(file, response){
-            //$("#image_id").val(response.image_id);
-            //console.log(response)
-
-            var html = `<div class="col-md-3" id="image-row-${response.image_id}"> <div class="card">
-                <input type="hidden" name="image_array[]" value="${response.image_id}">
-                <img src="${response.ImagePath}" class="card-img-top" alt="">
-                <div class="card-body">
-                    <a href="javascript:void(0)" onclick="deleteImage(${response.image_id})" class="btn btn-danger">Hapus</a>
-                </div>
-            </div></div>`;
-
-            $("#product-gallery").append(html);
-        },
-        complete: function(file){
-            this.removeFile(file);
-        }
-    });
-
-    function deleteImage(id){
-        // $("#image-row-"+id).remove();
-        $("#image-row-"+id).remove();
-        if (confirm("Apa kau yakin ingin menghapus gambar ?")){
-                $.ajax({
-                url: '{{route('product-images.destroy')}}',
-                type: 'delete',
-                data:{id:id},
-                success: function(response){
-                    if(response.status == true){
-                        toastr.success(response.message);
-                    } else {
-                        toastr.error(response.message);                    }
-                }
-
             });
-        }
-    }
-    
-</script>
-@endsection
-
+            
+            $("#category").change(function(){
+                var category_id = $(this).val();
+                
+                $.ajax({
+                    url: '{{route("product-sub_categories.index")}}',
+                    type: 'get',
+                    data: {category_id: category_id},
+                    dataType: 'json',
+                    success: function(response) {
+                        // console.log(response);
+                        $("#sub_category").find("option").not(":first").remove();
+                        $.each(response["subCategories"],function(key,item){
+                            $("#sub_category").append(`<option value='${item.id}'> ${item.name} </option>`)
+                        });
+                    },
+                    error: function(){
+                        console.log("Terjadi Sesuatu Yang Salah");
+                    }
+                });
+            });
+            
+            Dropzone.autoDiscover = false;    
+            const dropzone = $("#image").dropzone({ 
+                url:  "{{ route('product-images.update') }}",
+                maxFiles: 10,
+                paramName: 'image',
+                params:{'product_id': '{{$product->id}}'},
+                addRemoveLinks: true,
+                acceptedFiles: "image/jpeg,image/png,image/gif",
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }, success: function(file, response){
+                    //$("#image_id").val(response.image_id);
+                    //console.log(response)
+                    
+                    var html = `<div class="col-md-3" id="image-row-${response.image_id}"> <div class="card">
+                        <input type="hidden" name="image_array[]" value="${response.image_id}">
+                        <img src="${response.ImagePath}" class="card-img-top" alt="">
+                        <div class="card-body">
+                            <a href="javascript:void(0)" onclick="deleteImage(${response.image_id})" class="btn btn-danger">Hapus</a>
+                        </div>
+                    </div></div>`;
+                    
+                    $("#product-gallery").append(html);
+                },
+                complete: function(file){
+                    this.removeFile(file);
+                }
+            });
+            
+            function deleteImage(id){
+                // $("#image-row-"+id).remove();
+                $("#image-row-"+id).remove();
+                if (confirm("Apa kau yakin ingin menghapus gambar ?")){
+                    $.ajax({
+                        url: '{{route('product-images.destroy')}}',
+                        type: 'delete',
+                        data:{id:id},
+                        success: function(response){
+                            if(response.status == true){
+                                toastr.success(response.message);
+                            } else {
+                                toastr.error(response.message);                    }
+                            }
+                            
+                        });
+                    }
+                }
+                
+            </script>
+            @endsection
+            
+            

@@ -13,12 +13,14 @@ use Intervention\Image\Facades\Image;
 class CategoryController extends Controller
 {
     public function index(Request $request){
-        $categories = Category::orderBy('id', $request->sort ?? 'asc')
-        ->paginate(8);
+        $categories = Category::orderBy('id', $request->sort ?? 'asc');
         
         if(!empty($request->get('keyword'))){
             $categories = $categories->where('name','like','%'.$request->get('keyword').'%');
         }
+
+        $categories = $categories->paginate(8);
+
 
         return view('admin.category.list',compact('categories'));
     }

@@ -14,12 +14,14 @@ class BrandController extends Controller
      */
     public function index(Request $request)
     {
-        $brands = Brand::orderBy('id', $request->sort ?? 'asc')->paginate(8);
+        $brands = Brand::orderBy('id', $request->sort ?? 'asc');
         
         if(!empty($request->get('keyword'))){
-            $brand = $brands->where('name','like','%'.$request->get('keyword').'%');
+            $brands = $brands->where('name','like','%'.$request->get('keyword').'%');
         }
         
+
+        $brands = $brands->paginate(8);
         return view('admin.brand.list',compact('brands'));
     }
 

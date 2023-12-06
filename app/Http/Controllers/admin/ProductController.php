@@ -28,8 +28,7 @@ class ProductController extends Controller
         // $data['products'] = $products;
         // return view('admin.product.list',$data);
         $products = Product::orderBy('id', $request->sort ?? 'asc')
-        ->with('product_images')
-        ->paginate(5);
+        ->with('product_images');
         
         $data['products'] = $products;
         
@@ -38,6 +37,7 @@ class ProductController extends Controller
             ->get('keyword').'%');
         }
 
+        $products = $products->paginate(5);
         return view('admin.product.list',compact('products'));
     }
 
@@ -97,6 +97,9 @@ class ProductController extends Controller
             $product->sub_category_id = $request->sub_category;
             $product->brand_id = $request->brand;
             $product->is_featured = $request->is_featured;
+            $product->shipping_returns = $request->shipping_returns;
+            $product->short_description = $request->short_description;
+            $product->related_products = (!empty($request->related_products)) ? implode(',',$request->related_products) : '';
 
             $product->save();
 
@@ -183,6 +186,14 @@ class ProductController extends Controller
 
         
         $subCategories = SubCategory::where('category_id',$product->category_id)->get();
+
+        $relatedProducts = [];
+        //mengambil data produk terkait
+
+        if($product->related_products != ''){
+            $productArray = explode(',',$product->related_products);
+            $relatedProducts = Product::whereIn('id',$productArray)->with('product_images')->get();
+        }
         
 
         $data = [];
@@ -193,6 +204,7 @@ class ProductController extends Controller
         $data['product'] = $product;
         $data['subCategories'] = $subCategories;
         $data['productImages'] = $productImages;
+        $data['relatedProducts'] = $relatedProducts;
         
 
         return view('admin.product.edit',$data);
@@ -239,6 +251,9 @@ class ProductController extends Controller
             $product->sub_category_id = $request->sub_category;
             $product->brand_id = $request->brand;
             $product->is_featured = $request->is_featured;
+            $product->shipping_returns = $request->shipping_returns;
+            $product->short_description = $request->short_description;
+            $product->related_products = (!empty($request->related_products)) ? implode(',',$request->related_products) : '';
 
             $product->save();
 
@@ -296,4 +311,25 @@ class ProductController extends Controller
             'message' => 'Produk berhasil dihapus'
         ]);
     }
+
+    public function getProducts(Request $request) {
+        
+        $tempProduct = [];
+
+        if($request->term != ""){
+            $products = Product::where('title','like','%'.$request->term.'%')->get();
+
+            if($products != null){
+                foreach ($products as $product){
+                    $tempProduct[] = array('id' => $product->id,'text' => $product->title);
+                }
+            }
+        }
+
+        return response()->json([
+            'tags' => $tempProduct,
+            'status' => true
+        ]);
+
+    }  
 }

@@ -11,6 +11,8 @@ use App\Http\Controllers\admin\HomeController;
 use App\Http\Controllers\admin\ProductController;
 use App\Http\Controllers\admin\ProductSubCategoryController;
 use App\Http\Controllers\admin\SubCategoryController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\FrontController;
 use App\Http\Controllers\ShopController;
 use App\Models\Brand;
@@ -33,7 +35,32 @@ use PHPUnit\Framework\MockObject\Generator\OriginalConstructorInvocationRequired
 // });
 
 Route::get('/',[FrontController::class,'index'])->name('front.home');
-Route::get('/belanja',[ShopController::class,'index'])->name('front.shop');
+Route::get('/belanja/{categorySlug?}/{subCategorySlug?}',[ShopController::class,'index'])->name('front.shop');
+Route::get('/produk/{slug}',[ShopController::class,'product'])->name('front.product');
+Route::get('/keranjang',[CartController::class,'cart'])->name('front.cart');
+Route::post('/tambah-ke-keranjang',[CartController::class,'addToCart'])->name('front.addToCart');
+Route::post('/update-keranjang',[CartController::class,'updateCart'])->name('front.updateCart');
+Route::post('/hapus-produk',[CartController::class,'deleteItem'])->name('front.deleteItem.cart');
+Route::get('/checkout',[CartController::class,'checkout'])->name('front.checkout');
+
+
+Route::group(['prefix' => 'akun'],function (){
+    Route::group(['middleware' => 'guest'],function (){
+        Route::get('/login',[AuthController::class,'login'])->name('account.login');
+        Route::post('/login',[AuthController::class,'authenticate'])->name('account.authenticate');
+
+        Route::get('/register',[AuthController::class,'register'])->name('account.register');
+        Route::post('/proses-register',[AuthController::class,'processRegister'])->name('account.processRegister');
+
+    });
+
+    Route::group(['middleware' => 'auth'],function (){
+        Route::get('/profile',[AuthController::class,'profile'])->name('account.profile');
+        Route::get('/logout',[AuthController::class,'logout'])->name('account.logout');
+
+    });
+
+});
 
 
 Route::group(['prefix' => 'admin'],function (){
@@ -83,6 +110,8 @@ Route::group(['prefix' => 'admin'],function (){
         Route::get('/produk/{product}/edit-produk',[ProductController::class,'edit'])->name('products.edit');
         Route::put('/produk/{product}',[ProductController::class,'update'])->name('products.update');
         Route::delete('/produk/{product}',[ProductController::class,'destroy'])->name('products.delete');
+        Route::get('/mendapat-produk',[FrontController::class,'getProducts'])->name('products.getProducts');
+
 
         
         
