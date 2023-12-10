@@ -65,7 +65,8 @@
                     </a>
                 </div>
                 <div class="col-lg-6 col-6 text-left  d-flex justify-content-end align-items-center">
-                    <a href="{{route('account.profile')}}" class="nav-link text-dark">Akun Saya</a>
+                    {{-- <a href="{{route('account.profile')}}" class="nav-link text-dark">Akun Saya</a> --}}
+                    <a href="{{ route('account.profile') }}" class="nav-link text-dark @guest d-none @endguest">Akun Saya</a>
                     <form action="">
                         <div class="input-group">
                             <input type="text" placeholder="Cari Produk" class="form-control"
@@ -75,7 +76,12 @@
                             </span>
                         </div>
                     </form>
-                    <a href="{{route('account.login')}}" class="nav-link text-dark">Login</a>
+                    {{-- <a href="{{route('account.login')}}" class="nav-link text-dark">Login</a> --}}
+                    @auth
+                        <a href="{{ route('account.logout') }}" class="nav-link text-dark">Logout</a>
+                    @else
+                        <a href="{{ route('account.login') }}" class="nav-link text-dark">Login</a>
+                    @endauth
                 </div>
             </div>
         </div>

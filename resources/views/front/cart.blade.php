@@ -98,23 +98,16 @@
             </div>
             <div class="col-md-4">            
                 <div class="card cart-summery">
-                    <div class="sub-title">
-                        <h2 class="bg-white">Rincian Keranjang</h3>
-                        </div> 
                         <div class="card-body">
+                            <div class="sub-title">
+                                <h2 class="bg-white">Rincian Keranjang</h3>
+                            </div> 
                             <div class="d-flex justify-content-between pb-2">
                                 <div>Subtotal</div>
                                 <div>Rp {{Cart::subtotal()}}</div>
                             </div>
-                            <div class="d-flex justify-content-between pb-2">
-                                <div>Biaya Pengiriman</div>
-                                <div>Rp 0</div>
-                            </div>
-                            <div class="d-flex justify-content-between summery-end">
-                                <div>Total</div>
-                                <div>Rp {{Cart::subtotal()}}</div>
-                            </div>
-                            <div class="pt-5">
+                            
+                            <div class="pt-2">
                                 <a href="{{route('front.checkout')}}" class="btn-dark btn btn-block w-100">Lanjut Checkout</a>
                             </div>
                         </div>

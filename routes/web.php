@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\admin\DiscountCodeController;
 use App\Http\Controllers\admin\ProductImageController;
 use App\Http\Controllers\admin\TempImagesController;
 use Illuminate\Support\Facades\Route;
@@ -10,6 +11,7 @@ use App\Http\Controllers\admin\CategoryController;
 use App\Http\Controllers\admin\HomeController;
 use App\Http\Controllers\admin\ProductController;
 use App\Http\Controllers\admin\ProductSubCategoryController;
+use App\Http\Controllers\admin\ShippingController;
 use App\Http\Controllers\admin\SubCategoryController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
@@ -42,6 +44,7 @@ Route::get('/produk/{slug}',[ShopController::class,'product'])->name('front.prod
 // Route::post('/update-keranjang',[CartController::class,'updateCart'])->name('front.updateCart');
 // Route::post('/hapus-produk',[CartController::class,'deleteItem'])->name('front.deleteItem.cart');
 // Route::get('/checkout',[CartController::class,'checkout'])->name('front.checkout');
+Route::get('/terimakasih/{orderId}',[CartController::class,'thankyou'])->name('front.thankyou');
 
 
 Route::group(['prefix' => 'akun'],function (){
@@ -62,6 +65,10 @@ Route::group(['prefix' => 'akun'],function (){
         Route::post('/update-keranjang',[CartController::class,'updateCart'])->name('front.updateCart');
         Route::post('/hapus-produk',[CartController::class,'deleteItem'])->name('front.deleteItem.cart');
         Route::get('/checkout',[CartController::class,'checkout'])->name('front.checkout');
+        Route::post('/proses-checkout',[CartController::class,'processCheckout'])->name('front.processCheckout');
+        Route::post('/rincian-pesanan',[CartController::class,'getOrderSummary'])->name('front.getOrderSummary');
+        // Route::get('/terimakasih/{orderId}',[CartController::class,'thankyou'])->name('front.thankyou');
+
 
     });
 
@@ -115,28 +122,30 @@ Route::group(['prefix' => 'admin'],function (){
         Route::get('/produk/{product}/edit-produk',[ProductController::class,'edit'])->name('products.edit');
         Route::put('/produk/{product}',[ProductController::class,'update'])->name('products.update');
         Route::delete('/produk/{product}',[ProductController::class,'destroy'])->name('products.delete');
-        Route::get('/mendapat-produk',[FrontController::class,'getProducts'])->name('products.getProducts');
+        Route::get('/mendapat-produk',[ProductController::class,'getProducts'])->name('products.getProducts');
 
-
-        
         
         Route::get('/produk-sub_kategori',[ProductSubCategoryController::class,'index'])->name('product-sub_categories.index');
         
         Route::post('/produk-gambar_produk/update',[ProductImageController::class,'update'])->name('product-images.update');
         Route::delete('/produk-gambar_produk',[ProductImageController::class,'destroy'])->name('product-images.destroy');
 
+        //Route pengiriman
+        Route::get('/pengiriman/menambah-pengiriman',[ShippingController::class,'create'])->name('shipping.create');
+        Route::post('/pengiriman',[ShippingController::class,'store'])->name('shipping.store');
+        Route::get('/pengiriman/{id}',[ShippingController::class,'edit'])->name('shipping.edit');
+        Route::put('/pengiriman/{id}',[ShippingController::class,'update'])->name('shipping.update');
+        Route::delete('/pengiriman/{id}',[ShippingController::class,'destroy'])->name('shipping.delete');
 
+         //Route voucher
+        Route::get('/voucher',[DiscountCodeController::class,'index'])->name('voucher.index');
+        Route::get('/voucher/menambah-voucher',[DiscountCodeController::class,'create'])->name('voucher.create');
+        Route::post('/voucher',[DiscountCodeController::class,'store'])->name('voucher.store');
+        Route::get('/voucher/{voucher}/edit-voucher',[DiscountCodeController::class,'edit'])->name('voucher.edit');
+        // Route::put('/produk/{product}',[ProductController::class,'update'])->name('products.update');
+        // Route::delete('/produk/{product}',[ProductController::class,'destroy'])->name('products.delete');
 
-
-
-
-
-
-
-
-
-
-
+        
         
         //temp image category
         Route::post('/upload-temp-image',[TempImagesController::class,'create'])->name('temp-images.create');

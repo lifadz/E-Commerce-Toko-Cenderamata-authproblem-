@@ -55,7 +55,7 @@
                             <th>Brand</th>
                             <th>Slug</th>
                             <th width="100">Status</th>
-                            <th width="100">Action</th>
+                            <th width="100">Opsi</th>
                         </tr>
                     </thead>
                     <tbody>

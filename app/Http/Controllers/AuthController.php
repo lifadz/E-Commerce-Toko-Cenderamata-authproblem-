@@ -60,16 +60,17 @@ class AuthController extends Controller
 
             if(Auth::attempt(['email' => $request->email,'password' => $request->password],$request->get('remember'))){
 
-                if(session()->has('url.intended')){
-                    return redirect(session()->get('url.intended'));
-                }
-                // if (session()->has('url.intended')) {
-                //     $intendedUrl = session()->get('url.intended');
-                //     session()->forget('url.intended'); // Hapus session setelah digunakan
-                //     return redirect($intendedUrl);
+                // if(session()->has('url.intended')){
+                //     return redirect(session()->get('url.intended'));
+                    
                 // }
+                if (session()->has('url.intended')) {
+                    $intendedUrl = session()->get('url.intended');
+                    session()->forget('url.intended'); // Hapus session setelah digunakan
+                    return redirect($intendedUrl);
+                }
                 
-                return redirect()->route('account.profile')
+                return redirect()->route('front.home')
                 ->with('success','Anda berhasil login !');
 
             } else {
